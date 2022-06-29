@@ -21,7 +21,9 @@ typedef struct rb_root {
 } xf_rb_root_t;
 
 #define XF_RB_ROOT_INIT(root) \
-  { NULL, }
+  {                           \
+    NULL,                     \
+  }
 #define XF_RB_ROOT(root) xf_root_t root = XF_RB_ROOT_INIT(root)
 static inline void xf_rb_root_init(xf_rb_root_t *root) { root->rb_node = 0; }
 
@@ -33,7 +35,8 @@ extern void __xf_rb_insert_color(xf_rb_node_t *, xf_rb_root_t *);
 extern void xf_rb_erase(xf_rb_node_t *, xf_rb_root_t *);
 
 static inline void __xf_rb_link_node(xf_rb_node_t *node, xf_rb_node_t *parent,
-                                     xf_rb_node_t **rb_link) {
+                                     xf_rb_node_t **rb_link)
+{
   node->rb_parent = parent;
   node->rb_color = RB_RED;
   node->rb_left = node->rb_right = 0;
@@ -42,43 +45,54 @@ static inline void __xf_rb_link_node(xf_rb_node_t *node, xf_rb_node_t *parent,
 }
 
 #define xf_rb_node_find(root, what, compare_fn, res_node) \
-  do {                                                    \
+  do                                                      \
+  {                                                       \
     struct rb_node *__n = (root)->rb_node;                \
     (res_node) = NULL;                                    \
-    while (__n) {                                         \
+    while (__n)                                           \
+    {                                                     \
       int __hr = (compare_fn)(what, __n);                 \
       (res_node) = __n;                                   \
-      if (__hr == 0) {                                    \
+      if (__hr == 0)                                      \
+      {                                                   \
         (res_node) = __n;                                 \
         break;                                            \
-      } else if (__hr < 0) {                              \
+      } else if (__hr < 0)                                \
+      {                                                   \
         __n = __n->rb_left;                               \
-      } else {                                            \
+      } else                                              \
+      {                                                   \
         __n = __n->rb_right;                              \
       }                                                   \
     }                                                     \
   } while (0)
 
 #define xf_rb_node_add(root, newnode, compare_fn, duplicate_node) \
-  do {                                                            \
+  do                                                              \
+  {                                                               \
     struct rb_node **__link = &((root)->rb_node);                 \
     struct rb_node *__parent = NULL;                              \
     struct rb_node *__duplicate = NULL;                           \
     int __hr = 1;                                                 \
-    while (__link[0]) {                                           \
+    while (__link[0])                                             \
+    {                                                             \
       __parent = __link[0];                                       \
       __hr = (compare_fn)(newnode, __parent);                     \
-      if (__hr == 0) {                                            \
+      if (__hr == 0)                                              \
+      {                                                           \
         __duplicate = __parent;                                   \
         break;                                                    \
-      } else if (__hr < 0) {                                      \
+      } else if (__hr < 0)                                        \
+      {                                                           \
         __link = &(__link[0]->rb_left);                           \
-      } else {                                                    \
+      } else                                                      \
+      {                                                           \
         __link = &(__link[0]->rb_right);                          \
       }                                                           \
     }                                                             \
     (duplicate_node) = __duplicate;                               \
-    if (__duplicate == NULL) {                                    \
+    if (__duplicate == NULL)                                      \
+    {                                                             \
       __xf_rb_link_node(newnode, __parent, __link);               \
       __xf_rb_insert_color(newnode, root);                        \
     }                                                             \
