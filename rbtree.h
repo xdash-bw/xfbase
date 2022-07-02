@@ -24,15 +24,18 @@ typedef struct rb_root {
   {                           \
     NULL,                     \
   }
+
 #define XF_RB_ROOT(root) xf_root_t root = XF_RB_ROOT_INIT(root)
+
 static inline void xf_rb_root_init(xf_rb_root_t *root) { root->rb_node = 0; }
 
 #define CONTAINER_OF(ptr, type, member) \
   ((type *)(((char *)((type *)(ptr))) - offsetof(type, member)))
+
 #define RB_ENTRY(ptr, type, member) CONTAINER_OF(ptr, type, member)
 
-extern void __xf_rb_insert_color(xf_rb_node_t *, xf_rb_root_t *);
-extern void xf_rb_erase(xf_rb_node_t *, xf_rb_root_t *);
+void __xf_rb_insert_color(xf_rb_node_t *, xf_rb_root_t *);
+void xf_rb_erase(xf_rb_node_t *, xf_rb_root_t *);
 
 static inline void __xf_rb_link_node(xf_rb_node_t *node, xf_rb_node_t *parent,
                                      xf_rb_node_t **rb_link)
@@ -45,8 +48,7 @@ static inline void __xf_rb_link_node(xf_rb_node_t *node, xf_rb_node_t *parent,
 }
 
 #define xf_rb_node_find(root, what, compare_fn, res_node) \
-  do                                                      \
-  {                                                       \
+  do {                                                    \
     struct rb_node *__n = (root)->rb_node;                \
     (res_node) = NULL;                                    \
     while (__n)                                           \
@@ -68,8 +70,7 @@ static inline void __xf_rb_link_node(xf_rb_node_t *node, xf_rb_node_t *parent,
   } while (0)
 
 #define xf_rb_node_add(root, newnode, compare_fn, duplicate_node) \
-  do                                                              \
-  {                                                               \
+  do {                                                            \
     struct rb_node **__link = &((root)->rb_node);                 \
     struct rb_node *__parent = NULL;                              \
     struct rb_node *__duplicate = NULL;                           \
@@ -99,10 +100,10 @@ static inline void __xf_rb_link_node(xf_rb_node_t *node, xf_rb_node_t *parent,
   } while (0)
 
 /* Find logical next and previous nodes in a tree */
-extern xf_rb_node_t *xf_rb_next(xf_rb_node_t *);
-extern xf_rb_node_t *xf_rb_prev(xf_rb_node_t *);
-extern xf_rb_node_t *xf_rb_first(xf_rb_root_t *);
-extern xf_rb_node_t *xf_rb_last(xf_rb_root_t *);
+xf_rb_node_t *xf_rb_next(xf_rb_node_t *);
+xf_rb_node_t *xf_rb_prev(xf_rb_node_t *);
+xf_rb_node_t *xf_rb_first(xf_rb_root_t *);
+xf_rb_node_t *xf_rb_last(xf_rb_root_t *);
 
 #ifdef __cplusplus
 }
