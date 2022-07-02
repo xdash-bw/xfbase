@@ -56,7 +56,6 @@ size_t xf_vector_pop(xf_vector_t *v, void *obj, size_t size)
 
 void xf_vector_init(xf_vector_t *v)
 {
-  assert(v);
   v->data = 0;
   v->size = 0;
   v->capacity = 0;

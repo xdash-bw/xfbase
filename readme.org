@@ -5,7 +5,7 @@
   - 把最基础的读，写接口完成了，但是似乎有 bug, 无法通过正常运行
 
 - vector
-  - 完成最小的功能子集
+  - 理解其基本架构
     - 定义数据
     - 基本的几个功能
         init, destory, push, pop, resize, __capacity, reserve
@@ -13,10 +13,16 @@
         vector_data, vector_size, vactor_capacity
     - 用宏封装完成以上功能，变成取对象，而不是取 *纯数据*
 
-  - 新一步理解并且添加注释
+- 新一步理解并且添加注释
 
 - array
-  - 准备写
+  - 理解其基本架构
+    - 定义数据
+    - 基本的几个功能
+      init, destory, push, pop, __update
+    - access methods
+      data, index, size
+
 
 * 用 c 写的基础库
 ** c 项目用的数据结构

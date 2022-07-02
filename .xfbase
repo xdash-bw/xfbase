@@ -1,4 +1,24 @@
 * 开发记录
 - 已经完成 list 和红黑树的最基本功能，后续可能会继续添加功能，特别是 list, 和内核的差太多
+
 - page stream 只是完成几个接口，离全部还差点，完成必须跑起来
   - 把最基础的读，写接口完成了，但是似乎有 bug, 无法通过正常运行
+
+- vector
+  - 完成最小的功能子集
+    - 定义数据
+    - 基本的几个功能
+        init, destory, push, pop, resize, __capacity, reserve
+    - access methods
+        vector_data, vector_size, vactor_capacity
+    - 用宏封装完成以上功能，变成取对象，而不是取 *纯数据*
+
+  - 新一步理解并且添加注释
+
+- array
+  - 完成最小的功能子集
+    - 定义数据
+    - 基本的几个功能
+      init, destory, push, pop
+    - access methods
+      data, index, size

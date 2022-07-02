@@ -6,7 +6,7 @@
 
 /* 当插入后，内部的 vector 可能会进行内存分配。而 void *item
  * 可能会失效，所以要进行更新 */
-static void xf_array_update(xf_array_t *a)
+static void __xf_array_update(xf_array_t *a)
 {
   a->items = xf_vec_obj_data(&a->vec, void *);
 }
@@ -41,6 +41,6 @@ void *xf_array_pop(xf_array_t *a)
   int hr = xf_vec_obj_resize(&a->vec, void *, a->size);
   if (hr != 0) { assert(hr); }
 
-  xf_array_update(a);
+  __xf_array_update(a);
   return item;
 }
