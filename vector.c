@@ -53,3 +53,27 @@ size_t xf_vector_pop(xf_vector_t *v, void *obj, size_t size)
   v->size -= size;
   return size;
 }
+
+void xf_vector_init(xf_vector_t *v)
+{
+  assert(v);
+  v->data = 0;
+  v->size = 0;
+  v->capacity = 0;
+}
+
+void xf_vector_destory(xf_vector_t *v)
+{
+  if (v->data)
+  {
+    free(v->data);
+    v->data = 0;
+  }
+  v->size = 0;
+  v->capacity = 0;
+}
+
+int xf_vector_reserve(xf_vector_t *v, size_t newcap)
+{
+  return __xf_vector_capacity(v, (newcap >= v->size) ? newcap : v->size);
+}
