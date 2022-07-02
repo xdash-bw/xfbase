@@ -9,9 +9,9 @@ typedef struct xf_vector {
   size_t capacity;
 } xf_vector_t;
 
-/*
+/* =========================================================
   access methods
-*/
+============================================================*/
 
 /* 作为 unsigned char 缓存区操作数据 */
 #define xf_vector_data(v) ((v)->data)
@@ -24,18 +24,26 @@ typedef struct xf_vector {
 #define xf_vec_obj_size(v, type) ((v)->size / sizeof(type))
 #define xf_vec_obj_capacity(v, type) ((v)->capacity / sizeof(type))
 
-/*
-  功能接口
- */
+/* ===========================================================
+  function interface
+============================================================== */
 
 /* 像 STL 一样作为值语义使用，不建议动态分配，所以没有动态分配的接口 */
 void xf_vector_init(xf_vector_t *v);
 void xf_vector_destory(xf_vector_t *v);
 
-/* 操作 buffer */
 int xf_vector_push(xf_vector_t *v, const void *obj, size_t size);
 size_t xf_vector_pop(xf_vector_t *v, void *obj, size_t size);
+
+/* 外部用户调用时，主要用于减少 size, 用于减少 vector
+  的元素数量，不会涉及内存分配。
+
+  用户直接调用它用于增长 size 没有任何意义，这种情况应该只发生在 vector_push
+  函数内部，增长后立马 memcpy 填充。
+ */
 int xf_vector_resize(xf_vector_t *v, size_t newsize);
+
+/* 重新分配内存，两个目的：1. 用于减少无用的空间 2. 提前分配存储空间 */
 int xf_vector_reserve(xf_vector_t *v, size_t newcap);
 
 /* 封装为操作 obj 对象的接口 */
