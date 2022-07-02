@@ -28,7 +28,7 @@ void xf_array_destory(xf_array_t *a)
 void xf_array_push(xf_array_t *a, void *obj)
 {
   if (xf_vec_obj_push(&a->vec, void *, &obj) != 0) { assert(-1); }
-  xf_array_update(a);
+  __xf_array_update(a);
   a->size++;
 }
 
